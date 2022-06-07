@@ -1,11 +1,11 @@
 {
-  "name": "@lit/lit-starter-ts",
+  "name": "aria2-card",
   "private": true,
-  "version": "1.0.4",
-  "description": "A simple web component",
+  "version": "0.0.1",
+  "description": "A home assistant lovelace card to display aria2 download informations.",
   "author": "Thomas Deblock",
-  "main": "src/my-element.ts",
-  "module": "my-element.js",
+  "main": "src/index.ts",
+  "module": "aria2-card.js",
   "type": "module",
   "scripts": {
     "build": "tsc && rollup -c",
@@ -27,10 +27,12 @@
     "checksize": "rollup -c ; cat my-element.bundled.js | gzip -9 | wc -c ; rm my-element.bundled.js"
   },
   "keywords": [
-    "web-components",
-    "lit-element",
-    "typescript",
-    "lit"
+    "home-assistant",
+    "homeassistant",
+    "hass",
+    "automation",
+    "lovelace",
+    "aria2"
   ],
   "dependencies": {
     "lit": "^2.2.4"

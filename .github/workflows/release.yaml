@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    branches:
+      - master
+    inputs:
+      version:
+        description: 'the new version number'
+        required: true
+
+jobs:
+  release:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+        name: install dependencies
+      - run: npm run build
+        name: build custom component
+      - name: "update version number"
+        run: cat <<< $(jq '.version = "${{ github.event.inputs.version }}"' package.json) > package.json
+      - name: "commit version update"
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "ci: upgrade version to ${{ github.event.inputs.version }}"
+      - name: release
+        uses: ncipollo/release-action@v1
+        id: create_release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.event.inputs.version }}
+          artifacts: dist/aria2-card.js
+          name: version ${{ github.event.inputs.version }}

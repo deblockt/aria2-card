@@ -12,7 +12,7 @@ import replace from '@rollup/plugin-replace';
 export default {
   input: 'dist/js/index.js',
   output: {
-    file: 'dist/aria2-card.bundeled.js',
+    file: 'dist/aria2-card.js',
     format: 'esm',
   },
   onwarn(warning) {
