@@ -8,6 +8,7 @@ import summary from 'rollup-plugin-summary';
 import {terser} from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import watch from "rollup-plugin-watch";
 
 export default {
   input: 'dist/js/index.js',
@@ -21,6 +22,7 @@ export default {
     }
   },
   plugins: [
+    watch({ dir: 'dist/js' }),
     replace({'Reflect.decorate': 'undefined'}),
     resolve(),
     terser({
