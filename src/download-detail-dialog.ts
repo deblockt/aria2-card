@@ -66,7 +66,7 @@ export class DownloadDetailDialog extends LitElement {
 
         <ha-header-bar slot="heading">
           <ha-icon-button slot="navigationIcon" dialogAction="cancel">
-            <ha-icon icon="mdi:close"></ha-icon>
+            <ha-icon style="display: flex" icon="mdi:close"></ha-icon>
           </ha-icon-button>
           <div slot="title" class="main-title">
             ${this.currentDownload.name}

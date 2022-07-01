@@ -79,7 +79,7 @@ export class Aria2Card extends LitElement {
               @keydown=${this.startDownloadOnEnter}
             ></paper-input>
             <ha-icon-button @click="${this.startDownload}">
-              <ha-icon icon="hass:play"></ha-icon>
+              <ha-icon style="display: flex" icon="hass:play"></ha-icon>
             </ha-icon-button>
           </div>
           <div class="download-list">
@@ -114,16 +114,16 @@ export class Aria2Card extends LitElement {
 
   buildDownloadIcon(download: Download) {
     if (download.status === 'complete' || download.status === 'removed') {
-      return html`<ha-icon-button disabled="disabled"><ha-icon icon="hass:check"></ha-icon></ha-icon-button>`;
+      return html`<ha-icon-button disabled="disabled"><ha-icon style="display: flex" icon="hass:check"></ha-icon></ha-icon-button>`;
     } else if (download.status === 'paused') {
       return html`
-      <ha-icon-button @click="${() => this.actionOnDownload('resume', download)}"><ha-icon icon="hass:play"></ha-icon></ha-icon-button>
-      <ha-icon-button @click="${() => this.actionOnDownload('remove', download)}"><ha-icon icon="hass:stop" ></ha-icon></ha-icon-button>
+      <ha-icon-button @click="${() => this.actionOnDownload('resume', download)}"><ha-icon style="display: flex" icon="hass:play"></ha-icon></ha-icon-button>
+      <ha-icon-button @click="${() => this.actionOnDownload('remove', download)}"><ha-icon style="display: flex" icon="hass:stop" ></ha-icon></ha-icon-button>
       `;
     } else {
       return html`
-      <ha-icon-button @click="${() => this.actionOnDownload('pause', download)}"><ha-icon icon="hass:pause"></ha-icon></ha-icon-button>
-      <ha-icon-button @click="${() => this.actionOnDownload('remove', download)}"><ha-icon icon="hass:stop" ></ha-icon></ha-icon-button>
+      <ha-icon-button @click="${() => this.actionOnDownload('pause', download)}"><ha-icon style="display: flex" icon="hass:pause"></ha-icon></ha-icon-button>
+      <ha-icon-button @click="${() => this.actionOnDownload('remove', download)}"><ha-icon style="display: flex" icon="hass:stop" ></ha-icon></ha-icon-button>
       `;
     }
   }
