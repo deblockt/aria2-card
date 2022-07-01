@@ -1,8 +1,10 @@
 import {LitElement, html, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import { Download } from './download';
+import { Download, downloadedPercent } from './download';
 import { DownloadDetailDialog } from './download-detail-dialog';
 
+const FAST_REFRESH_DURATION_MILI = 3000;
+const SLOW_REFRESH_DURATION_MILI = 30000;
 
 @customElement('aria2-card')
 export class Aria2Card extends LitElement {
@@ -18,15 +20,32 @@ export class Aria2Card extends LitElement {
     }
 
     .download-list .item {
+      width: 100%;
+      position: relative;
+    }
+
+    .download-list .info {
       display: flex;
       flex-direction: row;
       align-items: center;
+      z-index: 1100;
+      position: relative
+    }
+
+    .progress {
+      height: 100%;
+      position: absolute;
+      z-index: 1000;
+      top: 0;
+      background-color: var(--mdc-select-fill-color);
+      transition: width ${FAST_REFRESH_DURATION_MILI}ms linear;
     }
 
     .download-list .item .name {
       flex-grow: 1;
       overflow: hidden;
       cursor: pointer;
+      padding-left: 5px;
     }
   `;
 
@@ -40,6 +59,9 @@ export class Aria2Card extends LitElement {
   downloads: Download[] = [];
 
   fetching = false;
+
+  refreshInterval?: NodeJS.Timer = undefined;
+  isFastRefresh = false;
 
   override render() {
     if (!this.config || !this.hass) {
@@ -63,8 +85,11 @@ export class Aria2Card extends LitElement {
           <div class="download-list">
             ${(this.downloads || []).slice(0, 10).map(download => html`
               <div class="item">
-                <span @click="${() => this.openDetail(download)}" class="name">${download.name}</span>
-                ${this.buildDownloadIcon(download)}
+                ${this.buildProgressBar(download)}
+                <div class="info">
+                  <span @click="${() => this.openDetail(download)}" class="name">${download.name}</span>
+                  ${this.buildDownloadIcon(download)}
+                </div>
               </div>
             `)}
           </div>
@@ -88,7 +113,7 @@ export class Aria2Card extends LitElement {
   }
 
   buildDownloadIcon(download: Download) {
-    if (download.status === 'complete') {
+    if (download.status === 'complete' || download.status === 'removed') {
       return html`<ha-icon-button disabled="disabled"><ha-icon icon="hass:check"></ha-icon></ha-icon-button>`;
     } else if (download.status === 'paused') {
       return html`
@@ -100,6 +125,17 @@ export class Aria2Card extends LitElement {
       <ha-icon-button @click="${() => this.actionOnDownload('pause', download)}"><ha-icon icon="hass:pause"></ha-icon></ha-icon-button>
       <ha-icon-button @click="${() => this.actionOnDownload('remove', download)}"><ha-icon icon="hass:stop" ></ha-icon></ha-icon-button>
       `;
+    }
+  }
+
+  buildProgressBar(download: Download) {
+    if (download.status != 'complete' && download.status !== 'removed') {
+      return html`
+        <div class="progress" style="width: ${downloadedPercent(download)}%">
+        </div>
+      `;
+    } else {
+      return html``;
     }
   }
 
@@ -140,6 +176,19 @@ export class Aria2Card extends LitElement {
         existingDownloadingDialog.currentDownload = refreshedDownload[0];
       }
     }
+
+    const hasActiveDownload = downloads.filter((download: Download) => download.status === 'active').length > 0;
+    if (this.refreshInterval) {
+      if (hasActiveDownload && !this.isFastRefresh) {
+        clearInterval(this.refreshInterval);
+        this.isFastRefresh = true;
+        this.refreshInterval = setInterval(() => this._refresh(), FAST_REFRESH_DURATION_MILI)
+      } else if (!hasActiveDownload && this.isFastRefresh) {
+        clearInterval(this.refreshInterval);
+        this.isFastRefresh = false;
+        this.refreshInterval = setInterval(() => this._refresh(), SLOW_REFRESH_DURATION_MILI)
+      }
+    }
   }
 
   setConfig(config: any) {
@@ -154,13 +203,14 @@ export class Aria2Card extends LitElement {
         this.fetching = true;
 
         setTimeout(() => this._refresh(), 0);
-        setInterval(() => this._refresh(), 30000);
+        this.refreshInterval = setInterval(() => this._refresh(), SLOW_REFRESH_DURATION_MILI);
+        this.isFastRefresh = false;
       }
     }
   }
 
   getCardSize() {
-    return 1+ Math.min(10, this.downloads.length);
+    return 1 + Math.min(10, this.downloads.length);
   }
 }
 
