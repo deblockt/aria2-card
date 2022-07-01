@@ -23,7 +23,9 @@ jobs:
       - run: npm run build
         name: build custom component
       - name: "update version number"
-        run: cat <<< $(jq '.version = "${{ github.event.inputs.version }}"' package.json) > package.json
+        run: |
+          cat <<< $(jq '.version = "${{ github.event.inputs.version }}"' package.json) > package.json
+          cat <<< $(jq '.version = "${{ github.event.inputs.version }}"' package-lock.json) > package-lock.json
       - name: "commit version update"
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
