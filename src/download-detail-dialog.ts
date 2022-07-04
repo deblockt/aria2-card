@@ -76,6 +76,12 @@ export class DownloadDetailDialog extends LitElement {
       `;
   }
 
+  override updated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has('currentDownload') && this.currentDownload != undefined) {
+      window.history.pushState({'currentDownload': this.currentDownload.gid}, '')
+    }
+  }
+
   buildRemainingTime(download: Download) {
     const remaingTimeInSecond = remainingDurationInSecond(download);
 
@@ -111,7 +117,17 @@ export class DownloadDetailDialog extends LitElement {
   }
 
   closeDetail() {
+    if (window.history.state && window.history.state.currentDownload === this.currentDownload?.gid) {
+      window.history.back()
+    }
     this.currentDownload = undefined;
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("popstate", () => {
+      this.closeDetail()
+    })
   }
 }
 
