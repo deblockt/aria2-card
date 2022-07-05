@@ -154,13 +154,15 @@ export class Aria2Card extends LitElement {
     if (this._downloadItem && this._downloadItem.value && this._downloadItem.value.length > 0) {
       await this.hass.callService('aria2', 'start_download', {'url': this._downloadItem.value})
       this._downloadItem.value = ''
-      setTimeout(() => this._refresh(), 300)
     }
   }
 
   async actionOnDownload(action: 'pause' | 'remove' | 'resume', download: Download) {
     await this.hass.callService('aria2', action + '_download', {'gid': download.gid})
-    setTimeout(() => this._refresh(), 300)
+    // doing that because there no removed event from aria2 https://github.com/aria2/aria2/issues/1947
+    if (action === 'remove') {
+       setTimeout(() => this._refresh(), 300)
+    }
   }
 
   async _refresh() {
@@ -205,6 +207,8 @@ export class Aria2Card extends LitElement {
         setTimeout(() => this._refresh(), 0);
         this.refreshInterval = setInterval(() => this._refresh(), SLOW_REFRESH_DURATION_MILI);
         this.isFastRefresh = false;
+
+        this.hass!.connection.subscribeEvents(() => this._refresh(), 'download_state_updated')
       }
     }
   }
