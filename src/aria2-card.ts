@@ -3,9 +3,6 @@ import {customElement, property, state} from 'lit/decorators.js';
 import { Download, downloadedPercent } from './download';
 import { DownloadDetailDialog } from './download-detail-dialog';
 
-const FAST_REFRESH_DURATION_MILI = 3000;
-const SLOW_REFRESH_DURATION_MILI = 30000;
-
 @customElement('aria2-card')
 export class Aria2Card extends LitElement {
   static override styles = css`
@@ -38,7 +35,7 @@ export class Aria2Card extends LitElement {
       z-index: 1000;
       top: 0;
       background-color: var(--mdc-select-fill-color);
-      transition: width ${FAST_REFRESH_DURATION_MILI}ms linear;
+      transition: width 3000ms linear;
     }
 
     .download-list .item .name {
@@ -57,11 +54,6 @@ export class Aria2Card extends LitElement {
 
   @state()
   downloads: Download[] = [];
-
-  fetching = false;
-
-  refreshInterval?: NodeJS.Timer = undefined;
-  isFastRefresh = false;
 
   override render() {
     if (!this.config || !this.hass) {
@@ -159,36 +151,18 @@ export class Aria2Card extends LitElement {
 
   async actionOnDownload(action: 'pause' | 'remove' | 'resume', download: Download) {
     await this.hass.callService('aria2', action + '_download', {'gid': download.gid})
-    // doing that because there no removed event from aria2 https://github.com/aria2/aria2/issues/1947
-    if (action === 'remove') {
-       setTimeout(() => this._refresh(), 300)
-    }
   }
 
-  async _refresh() {
-    const downloads = await this.hass.callApi("GET", "aria_download_list")
+  async _refresh(list: Download[]) {
+    this.downloads = list
 
     const hassShadowRoot = document.getElementsByTagName('home-assistant')[0].shadowRoot
     const existingDownloadingDialog: DownloadDetailDialog | null | undefined = hassShadowRoot?.querySelector('download-detail-dialog')
 
-    this.downloads = downloads;
     if (existingDownloadingDialog?.currentDownload) {
       const refreshedDownload = this.downloads.filter(download => download.gid == existingDownloadingDialog?.currentDownload?.gid);
       if (refreshedDownload.length > 0) {
         existingDownloadingDialog.currentDownload = refreshedDownload[0];
-      }
-    }
-
-    const hasActiveDownload = downloads.filter((download: Download) => download.status === 'active').length > 0;
-    if (this.refreshInterval) {
-      if (hasActiveDownload && !this.isFastRefresh) {
-        clearInterval(this.refreshInterval);
-        this.isFastRefresh = true;
-        this.refreshInterval = setInterval(() => this._refresh(), FAST_REFRESH_DURATION_MILI)
-      } else if (!hasActiveDownload && this.isFastRefresh) {
-        clearInterval(this.refreshInterval);
-        this.isFastRefresh = false;
-        this.refreshInterval = setInterval(() => this._refresh(), SLOW_REFRESH_DURATION_MILI)
       }
     }
   }
@@ -201,15 +175,7 @@ export class Aria2Card extends LitElement {
     super.connectedCallback();
 
     if (this.hass) {
-      if (!this.fetching) {
-        this.fetching = true;
-
-        setTimeout(() => this._refresh(), 0);
-        this.refreshInterval = setInterval(() => this._refresh(), SLOW_REFRESH_DURATION_MILI);
-        this.isFastRefresh = false;
-
-        this.hass!.connection.subscribeEvents(() => this._refresh(), 'download_state_updated')
-      }
+      this.hass!.connection.subscribeEvents((e: any) => this._refresh(e.data.list), 'download_list_updated')
     }
   }
 
