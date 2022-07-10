@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
+import {repeat} from 'lit/directives/repeat.js';
 import { Download, downloadedPercent } from './download';
 import { DownloadDetailDialog } from './download-detail-dialog';
 
@@ -75,7 +76,11 @@ export class Aria2Card extends LitElement {
             </ha-icon-button>
           </div>
           <div class="download-list">
-            ${(this.downloads || []).slice(0, 10).map(download => html`
+            ${
+              repeat(
+                (this.downloads || []).slice(0, 10),
+                (downwload: Download) => downwload.gid,
+                (download: Download) => html`
               <div class="item">
                 ${this.buildProgressBar(download)}
                 <div class="info">
