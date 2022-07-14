@@ -21,3 +21,7 @@ type: custom:aria2-card
 There are no configuration available for this card.
 
 By default, only 10 downloads are displayed by the card.
+
+# Limitation
+
+For now only admin user can use this card to get the list of downloads
