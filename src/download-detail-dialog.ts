@@ -5,7 +5,6 @@ import { Download, remainingDurationInSecond } from './download';
 
 @customElement('download-detail-dialog')
 export class DownloadDetailDialog extends LitElement {
-
   static override styles = css`
     .label {
       color: var(--secondary-text-color);
@@ -103,22 +102,28 @@ export class DownloadDetailDialog extends LitElement {
     return result;
   }
 
-  formatSize(byte: number) {
-    const gigaBytes = byte / 1_073_741_824;
-    if (gigaBytes >= 1) {
-      return (Math.round(gigaBytes * 100) / 100) + 'Go';
-    }
-    const megaBytes = byte / 1_048_576;
-    if (megaBytes >= 1) {
-      return (Math.round(megaBytes * 100) / 100) + 'Mo';
+  formatSize(size: number) {
+    const sizeUnits = [ 'B', 'KB', 'MB', 'GB' ];
+    let unit = sizeUnits[0];
+
+    if (!size) {
+      size = 0;
     }
 
-    return byte + ' o';
+    for (var i = 1; i < sizeUnits.length; i++) {
+      if (size >= 1024) {
+        size = size / 1024;
+        unit = sizeUnits[i];
+      } else {
+        break;
+      }
+    }
+    return size.toFixed(2) + ' ' + unit;
   }
 
   closeDetail() {
     if (window.history.state && window.history.state.currentDownload === this.currentDownload?.gid) {
-      window.history.back()
+      window.history.back();
     }
     this.currentDownload = undefined;
   }
@@ -126,7 +131,7 @@ export class DownloadDetailDialog extends LitElement {
   override connectedCallback() {
     super.connectedCallback();
     window.addEventListener("popstate", () => {
-      this.closeDetail()
+      this.closeDetail();
     })
   }
 }

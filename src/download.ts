@@ -8,12 +8,12 @@ export interface Download {
 }
 
 export function remainingDurationInSecond(download: Download): number {
-    const remainingSize = download.total_length - download.completed_length
-    const currentSpeed = download.download_speed
+    const remainingSize = download.total_length - download.completed_length;
+    const currentSpeed = download.download_speed;
 
-    return remainingSize / currentSpeed
+    return remainingSize / currentSpeed;
 }
 
 export function downloadedPercent(download: Download): number {
-    return download.completed_length * 100 / download.total_length
+    return download.completed_length * 100 / download.total_length;
 }
