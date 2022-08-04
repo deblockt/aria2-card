@@ -1,7 +1,6 @@
-import {LitElement, html, css} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import { Download, remainingDurationInSecond } from './download';
-
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { Download, remainingDurationInSecond, downloadedPercent } from './download';
 
 @customElement('download-detail-dialog')
 export class DownloadDetailDialog extends LitElement {
@@ -49,8 +48,9 @@ export class DownloadDetailDialog extends LitElement {
     let downloadData = html``
     if (this.currentDownload.status !== 'complete' && this.currentDownload.status !== 'paused') {
       downloadData = html`
-        <span class="label"> download speed: </span> <span class="value"> ${this.formatSize(this.currentDownload.download_speed)}/s </span> <br/>
-        <span class="label"> remaining time: </span> <span class="value"> ${this.buildRemainingTime(this.currentDownload)} </span> <br/>
+        <span class="label">download speed: </span> <span class="value"> ${this.formatSize(this.currentDownload.download_speed)}/s </span> <br/>
+        <span class="label">progress: </span> <span class="value"> ${this.buildProgress(this.currentDownload)} </span> <br/>
+        <span class="label">remaining time: </span> <span class="value"> ${this.buildRemainingTime(this.currentDownload)} </span> <br/>
       `;
     }
 
@@ -79,6 +79,14 @@ export class DownloadDetailDialog extends LitElement {
     if (changedProperties.has('currentDownload') && this.currentDownload != undefined) {
       window.history.pushState({'currentDownload': this.currentDownload.gid}, '')
     }
+  }
+
+  buildProgress(download: Download) {
+    const downloadPercent = downloadedPercent(download);
+    return downloadPercent.toFixed(2)
+      + '% (' + this.formatSize(download.completed_length)
+      + ' of ' + this.formatSize(download.total_length)
+      + ')';
   }
 
   buildRemainingTime(download: Download) {
