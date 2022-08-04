@@ -84,19 +84,23 @@ export class DownloadDetailDialog extends LitElement {
   buildRemainingTime(download: Download) {
     const remaingTimeInSecond = remainingDurationInSecond(download);
 
+    if (!isFinite(remaingTimeInSecond)) {
+      return 'infinity';
+    }
+
     const hours = Math.floor(remaingTimeInSecond / 3600);
     const minutes = Math.floor((remaingTimeInSecond - (hours * 3600)) / 60);
     const seconds = Math.floor(remaingTimeInSecond - (minutes * 60));
 
     let result = '';
     if (hours > 0) {
-      result += hours + 'h '
+      result += hours + ' h '
     }
     if (minutes > 0) {
-      result += minutes + 'm '
+      result += minutes + ' m '
     }
     if (hours == 0) {
-      result += seconds + 's'
+      result += seconds + ' s'
     }
 
     return result;
