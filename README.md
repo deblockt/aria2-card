@@ -8,7 +8,10 @@
 
 This card work only when the integration [aria2-integration](https://github.com/deblockt/hass-aria2) in installed.
 
-Copy the file `src/aria2-card.js` on your `configuration/www/` directory. Reload your home assistant frontend.
+This repo can be added using [hacs custom repositories](https://hacs.xyz/docs/faq/custom_repositories) feature.
+
+If you don't have hacs installed, download the file `aria2-card.js` from [this page](https://github.com/deblockt/aria2-card/releases) at copy it on your `configuration/www/` directory. Reload your home assistant frontend.
+
 
 You can now add the card on your lovelace ui using `custom card` and with the yaml
 
