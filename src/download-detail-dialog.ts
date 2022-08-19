@@ -35,10 +35,10 @@ export class DownloadDetailDialog extends LitElement {
         --mdc-theme-on-primary: var(--app-header-text-color, white);
       }
     }
-  `
+  `;
 
   @property()
-  public currentDownload?: Download = undefined
+  public currentDownload?: Download = undefined;
 
   override render() {
     if (!this.currentDownload) {
@@ -73,12 +73,6 @@ export class DownloadDetailDialog extends LitElement {
         </ha-header-bar>
       </ha-dialog>
       `;
-  }
-
-  override updated(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has('currentDownload') && this.currentDownload != undefined) {
-      window.history.pushState({'currentDownload': this.currentDownload.gid}, '')
-    }
   }
 
   buildProgress(download: Download) {
@@ -134,18 +128,9 @@ export class DownloadDetailDialog extends LitElement {
   }
 
   closeDetail() {
-    if (window.history.state && window.history.state.currentDownload === this.currentDownload?.gid) {
-      window.history.back();
-    }
     this.currentDownload = undefined;
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener("popstate", () => {
-      this.closeDetail();
-    })
-  }
 }
 
 declare global {
