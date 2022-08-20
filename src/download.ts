@@ -7,7 +7,7 @@ export interface Download {
     gid: string;
 }
 
-export function remainingDurationInSecond(download: Download): number {
+export function remainingDurationInSeconds(download: Download): number {
     const remainingSize = download.total_length - download.completed_length;
     const currentSpeed = download.download_speed;
 

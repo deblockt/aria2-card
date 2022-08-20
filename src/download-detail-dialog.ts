@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { Download, remainingDurationInSecond, downloadedPercent } from './download';
+import { Download, remainingDurationInSeconds, downloadedPercent } from './download';
 
 @customElement('download-detail-dialog')
 export class DownloadDetailDialog extends LitElement {
@@ -90,25 +90,29 @@ export class DownloadDetailDialog extends LitElement {
   }
 
   buildRemainingTime(download: Download) {
-    const remaingTimeInSecond = remainingDurationInSecond(download);
+    const remaingTimeInSeconds = remainingDurationInSeconds(download);
 
-    if (!isFinite(remaingTimeInSecond)) {
+    if (!isFinite(remaingTimeInSeconds)) {
       return 'infinity';
     }
 
-    const hours = Math.floor(remaingTimeInSecond / 3600);
-    const minutes = Math.floor((remaingTimeInSecond - (hours * 3600)) / 60);
-    const seconds = Math.floor(remaingTimeInSecond - (minutes * 60));
+    const days = Math.floor(remaingTimeInSeconds / (3600 * 24));
+    const hours = Math.floor((remaingTimeInSeconds % (3600 * 24)) / 3600);
+    const minutes = Math.floor((remaingTimeInSeconds % 3600) / 60);
+    const seconds = Math.floor(remaingTimeInSeconds % 60);
 
     let result = '';
+    if (days > 0) {
+      result += days + ' d ';
+    }
     if (hours > 0) {
-      result += hours + ' h '
+      result += hours + ' h ';
     }
     if (minutes > 0) {
-      result += minutes + ' m '
+      result += minutes + ' m ';
     }
-    if (hours == 0) {
-      result += seconds + ' s'
+    if (hours === 0 && days === 0) {
+      result += seconds + ' s';
     }
 
     return result;
