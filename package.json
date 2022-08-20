@@ -1,7 +1,7 @@
 {
   "name": "aria2-card",
   "private": true,
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A home assistant lovelace card to display aria2 download informations.",
   "author": "Thomas Deblock",
   "main": "src/index.ts",
