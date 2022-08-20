@@ -35,14 +35,14 @@ export class DownloadDetailDialog extends LitElement {
         --mdc-theme-on-primary: var(--app-header-text-color, white);
       }
     }
-  `
+  `;
 
   @property()
-  public currentDownload?: Download = undefined
+  public currentDownload?: Download = undefined;
 
   override render() {
     if (!this.currentDownload) {
-      return html``
+      return html``;
     }
 
     let downloadData = html``
@@ -134,7 +134,7 @@ export class DownloadDetailDialog extends LitElement {
   }
 
   closeDetail() {
-    if (window.history.state && window.history.state.currentDownload === this.currentDownload?.gid) {
+    if (this.currentDownload !== undefined && window.history.state && window.history.state.currentDownload === this.currentDownload?.gid) {
       window.history.back();
     }
     this.currentDownload = undefined;
@@ -142,9 +142,7 @@ export class DownloadDetailDialog extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    window.addEventListener("popstate", () => {
-      this.closeDetail();
-    })
+    window.addEventListener("popstate", () => this.closeDetail());
   }
 }
 
