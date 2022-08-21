@@ -176,13 +176,9 @@ export class Aria2Card extends LitElement {
     this.config = config
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-
-    if (this.hass) {
-      this.hass!.connection.subscribeEvents((e: any) => this._refresh(e.data.list), 'download_list_updated')
-      this.hass!.callService('aria2', 'refresh_downloads')
-    }
+  override firstUpdated() {
+    this.hass!.connection.subscribeEvents((e: any) => this._refresh(e.data.list), 'download_list_updated');
+    this.hass!.callService('aria2', 'refresh_downloads');
   }
 
   getCardSize() {
