@@ -16,11 +16,7 @@ You can use [HACS](https://hacs.xyz/) to install this component. Search for the 
 
 If you don't have hacs installed, download the file `aria2-card.js` from [this page](https://github.com/deblockt/aria2-card/releases) at copy it on your `configuration/www/` directory. Reload your home assistant frontend.
 
-You can now add the card on your lovelace ui using `custom card` and with the yaml
-
-``` yaml
-type: custom:aria2-card
-```
+You can now add the card on your lovelace ui looking for 'aria2' card.
 
 ## Configuration
 
