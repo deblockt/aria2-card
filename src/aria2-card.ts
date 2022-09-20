@@ -60,6 +60,9 @@ export class Aria2Card extends LitElement {
     if (!this.config || !this.hass) {
       return html``
     }
+    if (!('entry_id' in this.config)) {
+      return html`<ha-card> <div class="card-content"> You should edit the card to select the aria server to use. </div> </ha-card>`
+    }
 
     return html`
       <ha-card>
@@ -136,7 +139,6 @@ export class Aria2Card extends LitElement {
     }
   }
 
-  // TODO find type to return
   get _downloadItem(): any | undefined {
     return this.shadowRoot?.querySelector(".addBox");
   }
@@ -149,17 +151,21 @@ export class Aria2Card extends LitElement {
 
   async startDownload() {
     if (this._downloadItem && this._downloadItem.value && this._downloadItem.value.length > 0) {
-      await this.hass.callService('aria2', 'start_download', {'url': this._downloadItem.value})
+      await this.hass.callService('aria2', 'start_download', {'url': this._downloadItem.value, 'server_entry_id': this.entryId})
       this._downloadItem.value = ''
     }
   }
 
   async actionOnDownload(action: 'pause' | 'remove' | 'resume', download: Download) {
-    await this.hass.callService('aria2', action + '_download', {'gid': download.gid})
+    await this.hass.callService('aria2', action + '_download', {'gid': download.gid, 'server_entry_id': this.entryId})
   }
 
-  async _refresh(list: Download[]) {
-    this.downloads = list
+  async _refresh(aria_state: {server_entry_id?: string, list: Download[]}) {
+    if (aria_state.server_entry_id && this.entryId !== aria_state.server_entry_id) {
+      return;
+    }
+
+    this.downloads = aria_state.list
 
     const hassShadowRoot = document.getElementsByTagName('home-assistant')[0].shadowRoot
     const existingDownloadingDialog: DownloadDetailDialog | null | undefined = hassShadowRoot?.querySelector('download-detail-dialog')
@@ -172,17 +178,35 @@ export class Aria2Card extends LitElement {
     }
   }
 
+  get entryId() {
+    return this.config['entry_id'];
+  }
+
   setConfig(config: any) {
-    this.config = config
+    this.config = config;
+    if (!this.entryId) {
+      return;
+    }
+    if (this.hass) {
+      this.downloads = [];
+      this.hass!.callService('aria2', 'refresh_downloads', {'server_entry_id': this.entryId});
+    }
   }
 
   override firstUpdated() {
-    this.hass!.connection.subscribeEvents((e: any) => this._refresh(e.data.list), 'download_list_updated');
-    this.hass!.callService('aria2', 'refresh_downloads');
+    this.hass!.connection.subscribeEvents((e: any) => this._refresh(e.data), 'download_list_updated');
+    if (!this.entryId) {
+      return;
+    }
+    this.hass!.callService('aria2', 'refresh_downloads', {'server_entry_id': this.entryId});
   }
 
   getCardSize() {
     return 1 + Math.min(10, this.downloads.length);
+  }
+
+  static getConfigElement() {
+    return document.createElement('aria2-card-editor');
   }
 }
 
@@ -190,4 +214,8 @@ declare global {
   interface HTMLElementTagNameMap {
     'aria2-card': Aria2Card;
   }
+
+  interface Window {
+    customCards: {type: string; name: string; preview: boolean; description: string}[];
+   }
 }
