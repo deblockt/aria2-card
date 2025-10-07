@@ -13,7 +13,7 @@ export class Aria2Card extends LitElement {
       align-items: center;
     }
 
-    .start-download-row > paper-input {
+    .start-download-row > .addBox {
       flex-grow: 1;
     }
 
@@ -26,14 +26,12 @@ export class Aria2Card extends LitElement {
       display: flex;
       flex-direction: row;
       align-items: center;
-      z-index: 1100;
       position: relative
     }
 
     .progress {
       height: 100%;
       position: absolute;
-      z-index: 1000;
       top: 0;
       background-color: var(--mdc-select-fill-color);
       transition: width 3000ms linear;
@@ -68,15 +66,13 @@ export class Aria2Card extends LitElement {
       <ha-card>
         <div class="card-content">
           <div class="start-download-row">
-            <paper-input
-              no-label-float
-              class="addBox"
-              placeholder="url of the file to download"
-              @keydown=${this.startDownloadOnEnter}
-            ></paper-input>
-            <ha-icon-button @click="${this.startDownload}">
-              <ha-icon style="display: flex" icon="hass:play"></ha-icon>
-            </ha-icon-button>
+            <ha-textfield icon class="addBox" iconTrailing="true" placeholder="Url of the file to download" @keydown=${this.startDownloadOnEnter}>
+              <div class="trailing" slot="trailingIcon">
+                <ha-icon-button @click="${this.startDownload}">
+                  <ha-icon style="display: flex" icon="hass:play"></ha-icon>
+                </ha-icon-button>
+              </div>
+            </ha-textfield> 
           </div>
           <div class="download-list">
             ${
