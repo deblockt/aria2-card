@@ -5,35 +5,17 @@ import { Download, remainingDurationInSeconds, downloadedPercent } from './downl
 @customElement('download-detail-dialog')
 export class DownloadDetailDialog extends LitElement {
   static override styles = css`
+    .dialog-small {
+      --mdc-dialog-min-width: auto;
+      --mdc-dialog-min-height: auto;
+      z-index: 2000;
+    }
+    
     .label {
       color: var(--secondary-text-color);
     }
     .value {
       color: var(--primary-text-color);
-    }
-
-    ha-header-bar {
-      --mdc-theme-on-primary: var(--primary-text-color);
-      --mdc-theme-primary: var(--mdc-theme-surface);
-      flex-shrink: 0;
-      display: block;
-      border-bottom: 1px solid var(--mdc-dialog-scroll-divider-color, rgba(0, 0, 0, 0.12));
-    }
-
-    @media (max-width: 450px), (max-height: 500px) {
-      ha-dialog {
-          --mdc-dialog-min-width: calc( 100vw - env(safe-area-inset-right) - env(safe-area-inset-left) );
-          --mdc-dialog-max-width: calc( 100vw - env(safe-area-inset-right) - env(safe-area-inset-left) );
-          --mdc-dialog-min-height: 100%;
-          --mdc-dialog-max-height: 100%;
-          --vertial-align-dialog: flex-end;
-          --ha-dialog-border-radius: 0px;
-      }
-
-      ha-header-bar {
-        --mdc-theme-primary: var(--app-header-background-color);
-        --mdc-theme-on-primary: var(--app-header-text-color, white);
-      }
     }
   `;
 
@@ -55,7 +37,7 @@ export class DownloadDetailDialog extends LitElement {
     }
 
     return html`
-      <ha-dialog open hideactions heading=${this.currentDownload.name} @closed=${this.closeDetail}>
+      <ha-dialog class="dialog-small" open hideactions heading=${this.currentDownload.name} @closed=${this.closeDetail}>
         <div>
           <span class="label">file: </span> <span class="value">${this.currentDownload.name}</span> <br/>
           <span class="label">status: </span> <span class="value">${this.currentDownload.status}</span><br/>
@@ -63,14 +45,12 @@ export class DownloadDetailDialog extends LitElement {
           ${downloadData}
         </div>
 
-        <ha-header-bar slot="heading">
+        <ha-dialog-header slot="heading">
           <ha-icon-button slot="navigationIcon" dialogAction="cancel">
             <ha-icon style="display: flex" icon="mdi:close"></ha-icon>
           </ha-icon-button>
-          <div slot="title" class="main-title">
-            ${this.currentDownload.name}
-          </div>
-        </ha-header-bar>
+          <span slot="title">${this.currentDownload.name}</span>
+        </ha-dialog-header>
       </ha-dialog>
       `;
   }
