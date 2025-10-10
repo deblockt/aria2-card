@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Nedladdningshastighet",
+    "file": "Fil",
+    "infinity": "Oändlig",
+    "of": "av",
+    "progress": "Framsteg",
+    "remaining_time": "Återstående tid",
+    "size": "Storlek",
+    "status": "Status",
+    "time": {
+      "day": "d",
+      "hour": "h",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Klar",
+      "paused": "Pausad",
+      "removed": "Borttagen",
+      "active": "Aktiv"
+    }
+  },
+  "card": {
+    "url_to_download": "Fil-URL att ladda ner"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "ダウンロード速度",
+    "file": "ファイル",
+    "infinity": "無限",
+    "of": "の",
+    "progress": "進行状況",
+    "remaining_time": "残り時間",
+    "size": "サイズ",
+    "status": "ステータス",
+    "time": {
+      "day": "日",
+      "hour": "時",
+      "minute": "分",
+      "second": "秒"
+    },
+    "status_name": {
+      "complete": "完了",
+      "paused": "一時停止",
+      "removed": "削除済み",
+      "active": "アクティブ"
+    }
+  },
+  "card": {
+    "url_to_download": "ダウンロードするファイルのURL"
+  }
+}

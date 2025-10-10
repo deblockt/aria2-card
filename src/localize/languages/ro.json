@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Viteză descărcare",
+    "file": "Fișier",
+    "infinity": "Infinit",
+    "of": "din",
+    "progress": "Progres",
+    "remaining_time": "Timp rămas",
+    "size": "Dimensiune",
+    "status": "Status",
+    "time": {
+      "day": "z",
+      "hour": "h",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Finalizat",
+      "paused": "Pausat",
+      "removed": "Eliminat",
+      "active": "Activ"
+    }
+  },
+  "card": {
+    "url_to_download": "URL fișier de descărcat"
+  }
+}

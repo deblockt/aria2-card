@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Downloadspeed",
+    "file": "Datei",
+    "infinity": "Unendlich",
+    "of": "von",
+    "progress": "Fortschritt",
+    "remaining_time": "Verbleibende Zeit",
+    "size": "Größe",
+    "status": "Status",
+    "time": {
+      "day": "d",
+      "hour": "h",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Abgeschlossen",
+      "paused": "Pausiert",
+      "removed": "Entfernt",
+      "active": "Aktiv"
+    }
+  },
+  "card": {
+    "url_to_download": "Datei-URL zum Herunterladen"
+  }
+}

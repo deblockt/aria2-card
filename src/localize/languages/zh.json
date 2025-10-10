@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "下载速度",
+    "file": "文件",
+    "infinity": "无限",
+    "of": "的",
+    "progress": "进度",
+    "remaining_time": "剩余时间",
+    "size": "大小",
+    "status": "状态",
+    "time": {
+      "day": "天",
+      "hour": "小时",
+      "minute": "分",
+      "second": "秒"
+    },
+    "status_name": {
+      "complete": "完成",
+      "paused": "暂停",
+      "removed": "已删除",
+      "active": "活动"
+    }
+  },
+  "card": {
+    "url_to_download": "要下载的文件URL"
+  }
+}

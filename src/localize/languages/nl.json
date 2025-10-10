@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Downloadsnelheid",
+    "file": "Bestand",
+    "infinity": "Oneindig",
+    "of": "van",
+    "progress": "Voortgang",
+    "remaining_time": "Resterende tijd",
+    "size": "Grootte",
+    "status": "Status",
+    "time": {
+      "day": "d",
+      "hour": "u",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Voltooid",
+      "paused": "Gepauzeerd",
+      "removed": "Verwijderd",
+      "active": "Actief"
+    }
+  },
+  "card": {
+    "url_to_download": "Bestands-URL om te downloaden"
+  }
+}
