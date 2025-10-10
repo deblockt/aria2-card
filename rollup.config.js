@@ -9,6 +9,7 @@ import {terser} from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import watch from "rollup-plugin-watch";
+import json from '@rollup/plugin-json';
 
 export default {
   input: 'dist/js/index.js',
@@ -36,5 +37,6 @@ export default {
       },
     }),
     summary(),
+    json()
   ],
 };

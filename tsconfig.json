@@ -6,6 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
+    "resolveJsonModule": true,
     "inlineSources": true,
     "outDir": "./dist/js",
     "rootDir": "./src",

@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Velocità di download",
+    "file": "File",
+    "infinity": "Infinito",
+    "of": "di",
+    "progress": "Avanzamento",
+    "remaining_time": "Tempo rimanente",
+    "size": "Dimensione",
+    "status": "Stato",
+    "time": {
+      "day": "g",
+      "hour": "h",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Completato",
+      "paused": "In pausa",
+      "removed": "Rimosso",
+      "active": "Attivo"
+    }
+  },
+  "card": {
+    "url_to_download": "URL del file da scaricare"
+  }
+}

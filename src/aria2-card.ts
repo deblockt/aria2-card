@@ -3,6 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
 import { Download, downloadedPercent } from './download';
 import { DownloadDetailDialog } from './download-detail-dialog';
+import { localize } from './localize/localize';
 
 @customElement('aria2-card')
 export class Aria2Card extends LitElement {
@@ -66,7 +67,7 @@ export class Aria2Card extends LitElement {
       <ha-card>
         <div class="card-content">
           <div class="start-download-row">
-            <ha-textfield icon class="addBox" iconTrailing="true" placeholder="Url of the file to download" @keydown=${this.startDownloadOnEnter}>
+            <ha-textfield icon class="addBox" iconTrailing="true" placeholder="${localize('card.url_to_download')}" @keydown=${this.startDownloadOnEnter}>
               <div class="trailing" slot="trailingIcon">
                 <ha-icon-button @click="${this.startDownload}">
                   <ha-icon style="display: flex" icon="hass:play"></ha-icon>

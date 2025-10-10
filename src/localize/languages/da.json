@@ -1,0 +1,27 @@
+{
+  "download_detail_popin": {
+    "download_speed": "Downloadhastighed",
+    "file": "Fil",
+    "infinity": "Uendelig",
+    "of": "af",
+    "progress": "Fremdrift",
+    "remaining_time": "Resterende tid",
+    "size": "Størrelse",
+    "status": "Status",
+    "time": {
+      "day": "d",
+      "hour": "t",
+      "minute": "m",
+      "second": "s"
+    },
+    "status_name": {
+      "complete": "Færdig",
+      "paused": "Pauseret",
+      "removed": "Fjernet",
+      "active": "Aktiv"
+    }
+  },
+  "card": {
+    "url_to_download": "Fil-URL til download"
+  }
+}
