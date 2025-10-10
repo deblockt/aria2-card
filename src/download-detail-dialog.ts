@@ -5,12 +5,23 @@ import { Download, remainingDurationInSeconds, downloadedPercent } from './downl
 @customElement('download-detail-dialog')
 export class DownloadDetailDialog extends LitElement {
   static override styles = css`
-    .dialog-small {
+    ha-dialog {
       --mdc-dialog-min-width: auto;
       --mdc-dialog-min-height: auto;
       z-index: 2000;
     }
     
+    @media (max-width: 450px), (max-height: 500px) {
+      ha-dialog {
+          --mdc-dialog-min-width: 100vw;
+          --mdc-dialog-max-width: 100vw;
+          --mdc-dialog-min-height: 100%;
+          --mdc-dialog-max-height: 100%;
+          --vertical-align-dialog: flex-end;
+          --ha-dialog-border-radius: 0;
+      }
+    }
+
     .label {
       color: var(--secondary-text-color);
     }
@@ -37,7 +48,7 @@ export class DownloadDetailDialog extends LitElement {
     }
 
     return html`
-      <ha-dialog class="dialog-small" open hideactions heading=${this.currentDownload.name} @closed=${this.closeDetail}>
+      <ha-dialog open hideactions heading=${this.currentDownload.name} @closed=${this.closeDetail}>
         <div>
           <span class="label">file: </span> <span class="value">${this.currentDownload.name}</span> <br/>
           <span class="label">status: </span> <span class="value">${this.currentDownload.status}</span><br/>
