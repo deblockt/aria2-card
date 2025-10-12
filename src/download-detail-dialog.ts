@@ -33,6 +33,25 @@ export class DownloadDetailDialog extends LitElement {
     .value {
       color: var(--primary-text-color);
     }
+    
+    .file-entry {
+      display: flex;
+      justify-content: space-between;
+      white-space: nowrap;
+      overflow: hidden;
+      gap: 1rem;
+    }
+
+    .file-path {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-progress {
+      flex-shrink: 0;
+      color: var(--secondary-text-color);
+    }
   `;
 
   @property()
@@ -44,31 +63,60 @@ export class DownloadDetailDialog extends LitElement {
     }
 
     let downloadData = html``;
-    if (
-      this.currentDownload.status !== 'complete' &&
-      this.currentDownload.status !== 'paused'
-    ) {
-      downloadData = html`
-        <span class="label"
-          >${localize('download_detail_popin.download_speed')}:
-        </span>
-        <span class="value">
-          ${this.formatSize(this.currentDownload.download_speed)}/s
-        </span>
-        <br />
-        <span class="label"
-          >${localize('download_detail_popin.progress')}:
-        </span>
-        <span class="value"> ${this.buildProgress(this.currentDownload)} </span>
-        <br />
-        <span class="label"
-          >${localize('download_detail_popin.remaining_time')}:
-        </span>
-        <span class="value">
-          ${this.buildRemainingTime(this.currentDownload)}
-        </span>
-        <br />
-      `;
+    if (this.currentDownload.status === 'active') {
+      if (!this.currentDownload.is_torrent || !this.currentDownload.seeder) {
+        downloadData = html`
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.download_speed')}:</span>
+            <span class="value">${this.formatSize(this.currentDownload.download_speed)}/s</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.progress')}:</span>
+            <span class="value">
+              ${this.buildProgress(
+                this.currentDownload,
+                this.currentDownload.completed_length
+              )}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.remaining_time')}:</span>
+            <span class="value">
+              ${this.buildRemainingTime(
+                this.currentDownload,
+                this.currentDownload.completed_length,
+                this.currentDownload.download_speed
+              )}
+            </span>
+          </div>
+        `;
+      } else {
+        downloadData = html`
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.upload_speed')}: </span>
+            <span class="value">${this.formatSize(this.currentDownload.upload_speed)}/s</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.upload_progress')}: </span>
+            <span class="value">
+              ${this.buildProgress(
+                this.currentDownload,
+                this.currentDownload.upload_length
+              )}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.remaining_time')}: </span>
+            <span class="value">
+              ${this.buildRemainingTime(
+                this.currentDownload,
+                this.currentDownload.upload_length,
+                this.currentDownload.upload_speed
+              )}
+            </span>
+          </div>
+        `;
+      }
     }
 
     return html`
@@ -79,22 +127,19 @@ export class DownloadDetailDialog extends LitElement {
         @closed=${this.closeDetail}
       >
         <div>
-          <span class="label">${localize('download_detail_popin.file')}: </span>
-          <span class="value">${this.currentDownload.name}</span> <br />
-          <span class="label"
-            >${localize('download_detail_popin.status')}:
-          </span>
-          <span class="value"
-            >${localize(
-              'download_detail_popin.status_name.' + this.currentDownload.status as TranslationKey
-            )}</span
-          ><br />
-          <span class="label">${localize('download_detail_popin.size')}: </span>
-          <span class="value">
-            ${this.formatSize(this.currentDownload.total_length)}
-          </span>
-          <br />
-          ${downloadData}
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.file')}: </span>
+            <span class="value">${this.currentDownload.name}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.status')}:</span>
+            <span class="value">${this.mapStatus(this.currentDownload)}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">${localize('download_detail_popin.size')}: </span>
+            <span class="value">${this.formatSize(this.currentDownload.total_length)}</span>
+          </div>
+          ${downloadData} ${this.listFile(this.currentDownload)}
         </div>
 
         <ha-dialog-header slot="heading">
@@ -116,12 +161,79 @@ export class DownloadDetailDialog extends LitElement {
     }
   }
 
-  buildProgress(download: Download) {
-    const downloadPercent = downloadedPercent(download);
+  listFile(download: Download) {
+    if (!download.is_torrent) {
+      return html``;
+    }
+    const files = [...download.files].sort((a, b) =>
+      a.path.localeCompare(b.path)
+    );
+    const commonPathPrefix = files.length === 1
+      ? [] 
+      : files
+        .map((f) => f.path.split('/'))
+        .reduce((prefix, parts) => {
+          let i = 0;
+          while (
+            i < prefix.length &&
+            i < parts.length &&
+            prefix[i] === parts[i]
+          ) {
+            i++;
+          }
+          return prefix.slice(0, i);
+        });
+
+    const prefixPath = commonPathPrefix.join('/');
+    const prefixLength = prefixPath.length > 0 ? prefixPath.length + 1 : 0;
+
+    return html`
+      <div>
+        <span class="label">${localize('download_detail_popin.files')}:</span>
+        ${files.map((file) => {
+          const relativePath = file.path.substring(prefixLength);
+          const percent =
+            file.length === file.completed_length
+              ? '100'
+              : file.length > 0
+              ? ((file.completed_length / file.length) * 100).toFixed(2)
+              : '0.00';
+          const sizeIndication =
+            file.completed_length == file.length
+              ? html`${this.formatSize(file.length)}`
+              : html`${this.formatSize(file.completed_length)} /
+                ${this.formatSize(file.length)}`;
+
+          return html`
+            <div class="file-entry" title="${relativePath}">
+              <span class="file-path">${relativePath}</span>
+              <span class="file-progress">
+                ${sizeIndication} (${percent}%)
+              </span>
+            </div>
+          `;
+        })}
+      </div>
+    `;
+  }
+
+  mapStatus(download: Download): string {
+    if (download.is_torrent && download.seeder) {
+      return localize('download_detail_popin.status_name.seed');
+    } else {
+      return localize(
+        ('download_detail_popin.status_name.' +
+          download.status) as TranslationKey
+      );
+    }
+  }
+
+  buildProgress(download: Download, complete_length: number) {
+    const downloadPercent = downloadedPercent(download, complete_length);
     return (
       downloadPercent.toFixed(2) +
       '% (' +
-      this.formatSize(download.completed_length) +
+      this.formatSize(complete_length) +
       ' ' +
       localize('download_detail_popin.of') +
       ' ' +
@@ -130,8 +242,16 @@ export class DownloadDetailDialog extends LitElement {
     );
   }
 
-  buildRemainingTime(download: Download) {
-    const remaingTimeInSeconds = remainingDurationInSeconds(download);
+  buildRemainingTime(
+    download: Download,
+    completed_length: number,
+    speed: number
+  ) {
+    const remaingTimeInSeconds = remainingDurationInSeconds(
+      download,
+      completed_length,
+      speed
+    );
 
     if (!isFinite(remaingTimeInSeconds)) {
       return localize('download_detail_popin.infinity');
@@ -175,7 +295,8 @@ export class DownloadDetailDialog extends LitElement {
         break;
       }
     }
-    return size.toFixed(2) + ' ' + unit;
+
+    return (unit === 'GB' ? size.toFixed(2) : size.toFixed(0)) + ' ' + unit;
   }
 
   closeDetail() {

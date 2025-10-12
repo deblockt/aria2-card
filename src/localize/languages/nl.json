@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "Downloadsnelheid",
+    "upload_speed": "Uploadsnelheid",
+    "upload_progress": "Upload voortgang",
     "file": "Bestand",
+    "files": "Bestanden",
     "infinity": "Oneindig",
     "of": "van",
     "progress": "Voortgang",
@@ -18,7 +21,8 @@
       "complete": "Voltooid",
       "paused": "Gepauzeerd",
       "removed": "Verwijderd",
-      "active": "Actief"
+      "active": "Actief",
+      "seed": "Bezig met seeden"
     }
   },
   "card": {

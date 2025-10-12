@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "下载速度",
+    "upload_speed": "上传速度",
+    "upload_progress": "上传进度",
     "file": "文件",
+    "files": "文件",
     "infinity": "无限",
     "of": "的",
     "progress": "进度",
@@ -18,7 +21,8 @@
       "complete": "完成",
       "paused": "暂停",
       "removed": "已删除",
-      "active": "活动"
+      "active": "活动",
+      "seed": "做种中"
     }
   },
   "card": {

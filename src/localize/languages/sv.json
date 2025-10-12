@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "Nedladdningshastighet",
+    "upload_speed": "Uppladdningshastighet",
+    "upload_progress": "Uppladdningsförlopp",
     "file": "Fil",
+    "files": "Filer",
     "infinity": "Oändlig",
     "of": "av",
     "progress": "Framsteg",
@@ -18,7 +21,8 @@
       "complete": "Klar",
       "paused": "Pausad",
       "removed": "Borttagen",
-      "active": "Aktiv"
+      "active": "Aktiv",
+      "seed": "Seedning pågår"
     }
   },
   "card": {

@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "ダウンロード速度",
+    "upload_speed": "アップロード速度",
+    "upload_progress": "アップロード進行状況",
     "file": "ファイル",
+    "files": "ファイル",
     "infinity": "無限",
     "of": "の",
     "progress": "進行状況",
@@ -18,7 +21,8 @@
       "complete": "完了",
       "paused": "一時停止",
       "removed": "削除済み",
-      "active": "アクティブ"
+      "active": "アクティブ",
+      "seed": "シード中"
     }
   },
   "card": {

@@ -126,9 +126,9 @@ export class Aria2Card extends LitElement {
   }
 
   buildProgressBar(download: Download) {
-    if (download.status != 'complete' && download.status !== 'removed') {
+    if ((download.status !== 'complete' && download.status !== 'removed') && (!download.is_torrent || !download.seeder)) {
       return html`
-        <div class="progress" style="width: ${downloadedPercent(download)}%">
+        <div class="progress" style="width: ${downloadedPercent(download, download.completed_length)}%">
         </div>
       `;
     } else {
