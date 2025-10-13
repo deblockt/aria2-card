@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "Viteză descărcare",
+    "upload_speed": "Viteza de încărcare",
+    "upload_progress": "Progresul încărcării",
     "file": "Fișier",
+    "files": "Fișiere",
     "infinity": "Infinit",
     "of": "din",
     "progress": "Progres",
@@ -18,7 +21,8 @@
       "complete": "Finalizat",
       "paused": "Pausat",
       "removed": "Eliminat",
-      "active": "Activ"
+      "active": "Activ",
+      "seed": "Seed în curs"
     }
   },
   "card": {

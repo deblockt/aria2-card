@@ -1,7 +1,10 @@
 {
   "download_detail_popin": {
     "download_speed": "Velocità di download",
+    "upload_speed": "Velocità upload",
+    "upload_progress": "Progresso upload",
     "file": "File",
+    "files": "File",
     "infinity": "Infinito",
     "of": "di",
     "progress": "Avanzamento",
@@ -18,7 +21,8 @@
       "complete": "Completato",
       "paused": "In pausa",
       "removed": "Rimosso",
-      "active": "Attivo"
+      "active": "Attivo",
+      "seed": "Seeding in corso"
     }
   },
   "card": {
