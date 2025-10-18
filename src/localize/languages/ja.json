@@ -11,6 +11,8 @@
     "remaining_time": "残り時間",
     "size": "サイズ",
     "status": "ステータス",
+    "error_code": "エラーコード",
+    "error_message": "エラーメッセージ",
     "time": {
       "day": "日",
       "hour": "時",
@@ -22,7 +24,8 @@
       "paused": "一時停止",
       "removed": "削除済み",
       "active": "アクティブ",
-      "seed": "シード中"
+      "seed": "シード中",
+      "error": "エラー"
     }
   },
   "card": {

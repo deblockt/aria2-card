@@ -11,6 +11,8 @@
     "remaining_time": "剩余时间",
     "size": "大小",
     "status": "状态",
+    "error_code": "错误代码",
+    "error_message": "错误消息",
     "time": {
       "day": "天",
       "hour": "小时",
@@ -19,10 +21,11 @@
     },
     "status_name": {
       "complete": "完成",
-      "paused": "暂停",
+      "paused": "已暂停",
       "removed": "已删除",
       "active": "活动",
-      "seed": "做种中"
+      "seed": "做种中",
+      "error": "错误"
     }
   },
   "card": {

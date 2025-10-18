@@ -1,8 +1,8 @@
 {
   "download_detail_popin": {
     "download_speed": "Velocità di download",
-    "upload_speed": "Velocità upload",
-    "upload_progress": "Progresso upload",
+    "upload_speed": "Velocità di upload",
+    "upload_progress": "Avanzamento dell'upload",
     "file": "File",
     "files": "File",
     "infinity": "Infinito",
@@ -11,6 +11,8 @@
     "remaining_time": "Tempo rimanente",
     "size": "Dimensione",
     "status": "Stato",
+    "error_code": "Codice di errore",
+    "error_message": "Messaggio di errore",
     "time": {
       "day": "g",
       "hour": "h",
@@ -22,7 +24,8 @@
       "paused": "In pausa",
       "removed": "Rimosso",
       "active": "Attivo",
-      "seed": "Seeding in corso"
+      "seed": "Seeding",
+      "error": "Errore"
     }
   },
   "card": {

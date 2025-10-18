@@ -1,8 +1,8 @@
 {
   "download_detail_popin": {
-    "download_speed": "Viteză descărcare",
-    "upload_speed": "Viteza de încărcare",
-    "upload_progress": "Progresul încărcării",
+    "download_speed": "Viteză de descărcare",
+    "upload_speed": "Viteză de încărcare",
+    "upload_progress": "Progres încărcare",
     "file": "Fișier",
     "files": "Fișiere",
     "infinity": "Infinit",
@@ -10,7 +10,9 @@
     "progress": "Progres",
     "remaining_time": "Timp rămas",
     "size": "Dimensiune",
-    "status": "Status",
+    "status": "Stare",
+    "error_code": "Cod de eroare",
+    "error_message": "Mesaj de eroare",
     "time": {
       "day": "z",
       "hour": "h",
@@ -19,13 +21,14 @@
     },
     "status_name": {
       "complete": "Finalizat",
-      "paused": "Pausat",
+      "paused": "Pauzat",
       "removed": "Eliminat",
       "active": "Activ",
-      "seed": "Seed în curs"
+      "seed": "Seed în curs",
+      "error": "Eroare"
     }
   },
   "card": {
-    "url_to_download": "URL fișier de descărcat"
+    "url_to_download": "URL fișier pentru descărcare"
   }
 }

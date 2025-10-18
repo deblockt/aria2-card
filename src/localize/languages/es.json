@@ -11,6 +11,8 @@
     "remaining_time": "Tiempo restante",
     "size": "Tamaño",
     "status": "Estado",
+    "error_code": "Código de error",
+    "error_message": "Mensaje de error",
     "time": {
       "day": "d",
       "hour": "h",
@@ -19,10 +21,11 @@
     },
     "status_name": {
       "complete": "Completado",
-      "paused": "En pausa",
+      "paused": "Pausado",
       "removed": "Eliminado",
       "active": "Activo",
-      "seed": "Seed en curso"
+      "seed": "Compartiendo",
+      "error": "Error"
     }
   },
   "card": {

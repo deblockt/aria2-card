@@ -117,6 +117,17 @@ export class DownloadDetailDialog extends LitElement {
           </div>
         `;
       }
+    } else if (this.currentDownload.status === 'error') {
+      downloadData = html`
+        <div class="info-row">
+          <span class="label">${localize('download_detail_popin.error_code' as any)}: </span>
+          <span class="value">${this.currentDownload.error_code}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">${localize('download_detail_popin.error_message' as any)}: </span>
+          <span class="value">${this.currentDownload.error_message}</span>
+        </div>
+      `
     }
 
     return html`
