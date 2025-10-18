@@ -11,6 +11,8 @@
     "remaining_time": "Remaining time",
     "size": "Size",
     "status": "Status",
+    "error_code": "Error code",
+    "error_message": "Error message",
     "time": {
       "day": "d",
       "hour": "h",
@@ -18,11 +20,12 @@
       "second": "s"
     },
     "status_name": {
-      "complete": "Complete",
+      "complete": "Completed",
       "paused": "Paused",
       "removed": "Removed",
       "active": "Active",
-      "seed": "Seeding"
+      "seed": "Seeding",
+      "error": "Error"
     }
   },
   "card": {

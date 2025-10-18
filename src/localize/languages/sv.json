@@ -7,10 +7,12 @@
     "files": "Filer",
     "infinity": "Oändlig",
     "of": "av",
-    "progress": "Framsteg",
+    "progress": "Förlopp",
     "remaining_time": "Återstående tid",
     "size": "Storlek",
     "status": "Status",
+    "error_code": "Felkod",
+    "error_message": "Felmeddelande",
     "time": {
       "day": "d",
       "hour": "h",
@@ -18,11 +20,12 @@
       "second": "s"
     },
     "status_name": {
-      "complete": "Klar",
+      "complete": "Slutförd",
       "paused": "Pausad",
       "removed": "Borttagen",
       "active": "Aktiv",
-      "seed": "Seedning pågår"
+      "seed": "Seeder",
+      "error": "Fel"
     }
   },
   "card": {

@@ -6,13 +6,15 @@ export interface File {
 }
 
 export interface BaseDownload {
-  status: 'complete' | 'paused' | 'removed' | 'active';
+  status: 'complete' | 'paused' | 'removed' | 'active' | 'error';
   total_length: number;
   completed_length: number;
   download_speed: number;
   name: string;
   gid: string;
   files: File[];
+  error_code: number
+  error_message: string
 }
 
 export interface TorrentDownload extends BaseDownload {

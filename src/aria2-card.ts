@@ -83,12 +83,16 @@ export class Aria2Card extends LitElement {
               @keydown=${this.startDownloadOnEnter}
             >
               <div class="trailing" slot="trailingIcon">
-                <ha-icon-button @click="${this.startDownload}" title="start to download">
+                <ha-icon-button
+                  @click="${this.startDownload}"
+                  title="start to download"
+                >
                   <ha-icon style="display: flex" icon="hass:play"></ha-icon>
                 </ha-icon-button>
                 <ha-icon-button
                   title="Upload torrent file"
-                  @click="${() => this.shadowRoot?.getElementById('fileInput')?.click()}"
+                  @click="${() =>
+                    this.shadowRoot?.getElementById('fileInput')?.click()}"
                 >
                   <ha-icon style="display: flex" icon="hass:upload"></ha-icon>
                 </ha-icon-button>
@@ -126,7 +130,7 @@ export class Aria2Card extends LitElement {
     `;
   }
 
-  async uploadFile(event: InputEvent & { target: HTMLInputElement }) {
+  async uploadFile(event: InputEvent & {target: HTMLInputElement}) {
     const readFile = (file: File): Promise<string> => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -166,6 +170,10 @@ export class Aria2Card extends LitElement {
     if (download.status === 'complete' || download.status === 'removed') {
       return html`<ha-icon-button disabled="disabled"
         ><ha-icon style="display: flex" icon="hass:check"></ha-icon
+      ></ha-icon-button>`;
+    } else if (download.status === 'error') {
+      return html`<ha-icon-button disabled="disabled"
+        ><ha-icon style="display: flex" icon="hass:alert-circle-outline"></ha-icon
       ></ha-icon-button>`;
     } else if (download.status === 'paused') {
       return html`

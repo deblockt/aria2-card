@@ -4,13 +4,15 @@
     "upload_speed": "Velocidade de upload",
     "upload_progress": "Progresso de upload",
     "file": "Ficheiro",
-    "files": "Arquivos",
+    "files": "Ficheiros",
     "infinity": "Infinito",
     "of": "de",
     "progress": "Progresso",
     "remaining_time": "Tempo restante",
     "size": "Tamanho",
     "status": "Estado",
+    "error_code": "Código de erro",
+    "error_message": "Mensagem de erro",
     "time": {
       "day": "d",
       "hour": "h",
@@ -19,13 +21,14 @@
     },
     "status_name": {
       "complete": "Concluído",
-      "paused": "Em pausa",
+      "paused": "Pausado",
       "removed": "Removido",
       "active": "Ativo",
-      "seed": "Seed em andamento"
+      "seed": "A semear",
+      "error": "Erro"
     }
   },
   "card": {
-    "url_to_download": "URL do ficheiro para descarregar"
+    "url_to_download": "URL do ficheiro para download"
   }
 }

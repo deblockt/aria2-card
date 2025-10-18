@@ -2,7 +2,7 @@
   "download_detail_popin": {
     "download_speed": "Downloadsnelheid",
     "upload_speed": "Uploadsnelheid",
-    "upload_progress": "Upload voortgang",
+    "upload_progress": "Uploadvoortgang",
     "file": "Bestand",
     "files": "Bestanden",
     "infinity": "Oneindig",
@@ -11,6 +11,8 @@
     "remaining_time": "Resterende tijd",
     "size": "Grootte",
     "status": "Status",
+    "error_code": "Foutcode",
+    "error_message": "Foutmelding",
     "time": {
       "day": "d",
       "hour": "u",
@@ -22,7 +24,8 @@
       "paused": "Gepauzeerd",
       "removed": "Verwijderd",
       "active": "Actief",
-      "seed": "Bezig met seeden"
+      "seed": "Seeden",
+      "error": "Fout"
     }
   },
   "card": {

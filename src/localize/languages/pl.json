@@ -5,12 +5,14 @@
     "upload_progress": "Postęp wysyłania",
     "file": "Plik",
     "files": "Pliki",
-    "infinity": "Nieskończoność",
+    "infinity": "Nieskończony",
     "of": "z",
     "progress": "Postęp",
     "remaining_time": "Pozostały czas",
     "size": "Rozmiar",
     "status": "Status",
+    "error_code": "Kod błędu",
+    "error_message": "Komunikat o błędzie",
     "time": {
       "day": "d",
       "hour": "g",
@@ -18,14 +20,15 @@
       "second": "s"
     },
     "status_name": {
-      "complete": "Zakończone",
-      "paused": "Wstrzymane",
-      "removed": "Usunięte",
+      "complete": "Zakończony",
+      "paused": "Wstrzymany",
+      "removed": "Usunięty",
       "active": "Aktywny",
-      "seed": "Seedowanie w toku"
+      "seed": "Udostępnianie",
+      "error": "Błąd"
     }
   },
   "card": {
-    "url_to_download": "URL pliku do pobrania"
+    "url_to_download": "Adres URL pliku do pobrania"
   }
 }
